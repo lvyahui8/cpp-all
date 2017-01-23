@@ -80,7 +80,7 @@ int libcurl_get(const char* url, string& buffer,string headers[] )
 int main() {
     string resp;
     string headers[] = {"apikey:87a8ea08-dbaa-11e6-b3f9-7056818a4db5"};
-    libcurl_get("http://xxx.com?date=20170101&m3id=22223&size=2&page=1&minload=1.0&maxload=1",resp,headers);
+    libcurl_get("http://movesun.com/demo/json?date=20170101&m3id=22223&size=2&page=1&minload=1.0&maxload=1",resp,headers);
     cout << resp << endl;
     return 0;
 }

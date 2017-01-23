@@ -91,7 +91,7 @@ int libcurl_post(const char* url, const char* data, string& buffer, string heade
 int main() {
     string resp;
     string headers[] = {"apikey:87a8ea08-dbaa-11e6-b3f9-7056818a4db5","Content-Type:pplication/json"};
-    libcurl_post("http://xxx.com",
+    libcurl_post("http://movesun.com/json/push",
                  "{\"interfaceName\":\"saveLog\", \"params\":{\"ips\": \"10.198.11.203\",\"operator\": \"henryjhuang\", \"logTime\": \"2017-01-23 10:05:00\", \"changeContent\": \"testing\"}}",
                  resp,headers);
     cout << resp << endl;
