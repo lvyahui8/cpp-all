@@ -1,16 +1,16 @@
-//
 // yum install libcurl-devel -y
 // curl-config --cflags
 // curl-config --libs
-// g++ -lcurl -o get_example get_example.cpp
-// ./get_example
-// Created by samlv on 2017/1/23.
+// g++ -lcurl -o main main.cpp
+// ./main
+// Created by lvyahui on 2017/1/23.
 //
 
 #include <iostream>
 #include <string>
 #include <cstdlib>
-#include "curl/curl.h"
+#include <list>
+#include <curl/curl.h>
 
 using namespace std;
 
@@ -49,6 +49,22 @@ static void init(CURL*& conn, const char* url, string * p_buffer, string headers
     }
 }
 
+void libcurl_post(const char* url, const char* data, string& buffer, string headers[])
+{
+    CURL *conn = curl_easy_init();
+    curl_global_init(CURL_GLOBAL_DEFAULT);
+
+    init(conn, url, &buffer,headers);
+
+    curl_easy_setopt(conn, CURLOPT_POST, 1);
+
+    curl_easy_setopt(conn, CURLOPT_POSTFIELDS, data);
+
+    curl_easy_perform(conn);
+
+    curl_easy_cleanup(conn);
+}
+
 void libcurl_get(const char* url, string& buffer,string headers[] )
 {
     CURL *conn = curl_easy_init();
@@ -65,7 +81,16 @@ void libcurl_get(const char* url, string& buffer,string headers[] )
 int main() {
     string resp;
     string headers[] = {"apikey:87a8ea08-dbaa-11e6-b3f9-7056818a4db5"};
+
     libcurl_get("http://movesun.com/demo/json?date=20170101&m3id=22223&size=2&page=1&minload=1.0&maxload=1",resp,headers);
+
+    cout << resp << endl;
+
+    //string headers[] = {"apikey:87a8ea08-dbaa-11e6-b3f9-7056818a4db5","Content-Type:pplication/json"};
+
+    libcurl_post("http://movesun.com/json/push",
+                 "{\"interfaceName\":\"saveLog\", \"params\":{\"ips\": \"10.198.11.203\",\"operator\": \"henryjhuang\", \"logTime\": \"2017-01-23 10:05:00\", \"changeContent\": \"testing\"}}",
+                 resp,headers);
     cout << resp << endl;
     return 0;
 }
