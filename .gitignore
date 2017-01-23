@@ -96,4 +96,6 @@ dkms.conf
 *.cbp
 bin
 obj
+*.layout
+
 
