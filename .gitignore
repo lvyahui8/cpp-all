@@ -92,3 +92,8 @@ dkms.conf
 *.out
 *.app
 
+#Code::Blocks
+*.cbp
+bin
+obj
+
