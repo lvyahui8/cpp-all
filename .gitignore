@@ -108,3 +108,6 @@ obj
 Release
 Debug
 ipch
+
+
+*.run
