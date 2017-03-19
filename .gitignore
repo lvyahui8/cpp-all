@@ -2,6 +2,7 @@
 ### Example user template template
 ### Example user template
 *_svr
+exe_*
 # IntelliJ project files
 .idea
 *.iml

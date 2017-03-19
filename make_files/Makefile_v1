@@ -1,0 +1,10 @@
+CXX	= g++
+SRCS	= $(wildcard *.cpp)
+PROGS	= $(SRCS:.cpp=)
+
+all:$(PROGS)
+$(PROGS):%:%.cpp
+	$(CXX) $^ -o $@
+
+clean:
+	rm -f $(PROGS) 
