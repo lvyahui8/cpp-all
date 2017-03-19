@@ -1,4 +1,5 @@
 #include <handy/handy.h>
+#include <sstream>
 
 using namespace std;
 using namespace handy;
@@ -19,7 +20,16 @@ int main(int argc ,const char * argv []){
 	echoServer.onGet("/h5/reply/unread-with-time", [](const HttpConnPtr& con) {
         	string v = con.getRequest().version;
         	HttpResponse resp;
-       	 	resp.body = Slice("{\"c\":0,\"t\":-28800}");
+		stringstream outJson;
+		// string outJson ;
+		time_t t = time(0);
+		outJson << "{\"c\":0,\"t\":" << t << "}" ;
+       	 	//resp.body = Slice("{\"c\":0,\"t\":-28800}");
+       	 	// outJson += "{\"c\":0,\"t\":";
+		//outJson += itoa(t);
+		// outJson += "}";
+       	 	// resp.body = Slice(outJson.c_str());
+       	 	resp.body = Slice(outJson.str());
         	con.sendResponse(resp);
         	if (v == "HTTP/1.0") {
             		con->close();
