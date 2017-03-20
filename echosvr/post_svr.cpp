@@ -17,7 +17,7 @@ int main(int argc ,const char * argv []){
 	HttpServer echoServer(& base);
 	int r = echoServer.bind("",8088);
 	exitif(r,"bind failed %d %s",errno,strerror(errno));
-	echoServer.onPost("/post_example", [](const HttpConnPtr& con) {
+	echoServer.onRequest("POST","/post_example", [](const HttpConnPtr& con) {
         	string v = con.getRequest().version;
         	HttpResponse resp;
 		stringstream outJson;
