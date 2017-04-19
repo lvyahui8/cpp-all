@@ -4,8 +4,8 @@
 
 int main(int argc, char * argv[]){
 	int a ,b;
-	scanf("a=%d;b=%d",&a,&b);
-	printf("a:%d;b:%d\n",a,b);
+	//scanf("a=%d;b=%d",&a,&b);
+	//printf("a:%d;b:%d\n",a,b);
 
 	char * hosts_file = "E:\\hosts";
 	char * out_hosts_file = "F:\\hosts";
@@ -23,11 +23,12 @@ int main(int argc, char * argv[]){
 	int ips[4];
 	char domain[256];
 	int nfields = 0;
-	while((nfields = fscanf(hosts_input,"%d.%d.%d.%d %s",ips,ips+1,ips+2,ips+3,domain)) != EOF){
-		if(nfields != 5){
+	char buffer[256]; // 处理的最长行为256
+	while(fgets(buffer,256,hosts_input) != NULL){
+		if(sscanf(buffer,"%d.%d.%d.%d %s",ips,ips+1,ips+2,ips+3,domain) != 5){
 			continue;
 		}
-		fprintf(hosts_output,"%d.%d.%d.%d %s",*ips,ips[1],ips[2],ips[3],domain);
+		fprintf(hosts_output,"%d.%d.%d.%d\t\t\t%s\n",*ips,ips[1],ips[2],ips[3],domain);
 	}
 	if(hosts_input != NULL){
 		fclose(hosts_input);
