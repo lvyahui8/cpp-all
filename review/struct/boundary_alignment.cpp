@@ -23,7 +23,7 @@ struct align1
 	char a;
 	int b;
 	char c;
-} sim1,sim2;
+} sim1,sim2,sim[2];
 
 // --sim1------ ----sim2----
 // a---bbbbc--- a---bbbbc---

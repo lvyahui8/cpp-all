@@ -69,7 +69,7 @@ int main(){
 	printf("m6 size : %d\n",sizeof m6);
 	printf("m7 size : %d\n",sizeof m7);
 
-	// offsetof 计算成员离结构体首地址偏移的字节数
+	// offsetof 函数用来计算成员离结构体首地址偏移的字节数
 	printf("MyStruct1 b offset : %d\n",offsetof(struct MyStruct1,b));	// b偏移8个字节，所以成员a占用8个字节
 	printf("MyStruct2 d offset : %d\n",offsetof(struct MyStruct2,d));	// d偏移了16个字节 
 	printf("MyStruct3 c offset : %d\n",offsetof(struct MyStruct3,c));	// 偏移8
