@@ -199,7 +199,7 @@ int main(int argc,char * argv[]){
     
     init_listen_socket(g_efd,port);
     
-    struct epoll_event(events[MAX_EVENTS + 1]);
+    struct epoll_event events[MAX_EVENTS + 1];
     
     printf("server running:port[%d]\n",port);
     int checkpos = 0 , i;
@@ -230,10 +230,11 @@ int main(int argc,char * argv[]){
         
         for(i = 0;i < nfd; i ++){
             struct myevent_s * ev = (struct myevent_s *) events[i].data.ptr;
+	    // 触发的是in事件，并且注册关注的也是in事件
             if((events[i].events & EPOLLIN ) && (ev->events & EPOLLIN)){
                 ev->call_back(ev->fd,events[i].events,ev->arg);
             }
-            
+            // 触发的是out事件，并且注册关注的也是out事件 
             if((events[i].events & EPOLLOUT) && (ev->events & EPOLLOUT)){
                 ev->call_back(ev->fd,events[i].events,ev->arg);
             }
