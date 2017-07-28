@@ -8,8 +8,6 @@
 //
 
 #include <iostream>
-#include <string>
-#include <cstdlib>
 #include "curl/curl.h"
 
 using namespace std;
