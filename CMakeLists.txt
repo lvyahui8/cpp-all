@@ -8,6 +8,7 @@ set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -lcurl")
 
 
 set(SOURCE_FILES net/get_example.cpp)
+set(BUILD_SHARED_LIBS "${BUILD_SHARED_LIBS} /root/soft/apue.3e/include")
 
 message(${cpp-all_SOURCE_DIR})
 message(${PROJECT_BINARY_DIR})
