@@ -25,7 +25,7 @@ int main(int argc, char * argv[]){
     if ((pid = fork()) < 0) {
         err_sys("fork error");
     } else if (!pid) {
-        if (execlp("exe_c8_13","exe_c8_13","arg1", (char *) 0) < 0) {
+        if (execlp("/root/work/cpp-all/utils/echo_args.app","echo_args.app","arg1", (char *) 0) < 0) {
             err_sys("execlp error");
         }
     }
