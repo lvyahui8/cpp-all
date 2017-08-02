@@ -8,7 +8,7 @@ PROGS   = $(SRCS:.c=)
 #PROGS   = $(addprefix exe_,$(SRCS:.cpp=))
 all:$(PROGS)
 $(PROGS):%:%.c $(LIBAPUE)
-	$(CC) $(CFLAGS) $^ -o exe_$@ $(LDFLAGS) $(LDLIBS)
+	$(CC) $(CFLAGS) $^ -o $@.app $(LDFLAGS) $(LDLIBS)
 
 clean:
-	rm -f $(addprefix exe_,$(PROGS))
+	rm -f $(addsuffix .app,$(PROGS))
