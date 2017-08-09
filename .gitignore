@@ -116,3 +116,4 @@ ipch
 
 *.run
 lib/*.tar.gz
+lib/*
