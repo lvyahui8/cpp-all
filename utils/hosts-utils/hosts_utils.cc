@@ -49,7 +49,7 @@ int main(int argc ,char * argv []){
 	cout << "hosts file :" << fileArg.getValue() << endl;
 	cout << "uniq :" << uniqSw.getValue() << endl;
 
-	getchar();
+	//getchar();
 	return 0;
 }
 
