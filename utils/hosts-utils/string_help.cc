@@ -3,7 +3,7 @@
 
 using namespace std;
 
-string trim(const string & str,const string chs = "\r\n\t\0"){
+string trim(const string & str,const string chs){
 	if ( str.empty() ) {
 		return str;
 	}
@@ -27,6 +27,6 @@ string trim(const string & str,const string chs = "\r\n\t\0"){
 }
 
 
-int split(const string & str,vector<string> ret,string dim = " " ){
+int split(const string & str,vector<string> ret,string dim  ){
 	return 0;
 }

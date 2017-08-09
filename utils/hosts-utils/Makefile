@@ -13,5 +13,5 @@ OBJS=$(patsubst %.cc,%.o, $(SRCS))
 hosts_utils : $(OBJS)
 	$(CXX) $(OBJS) $(CXXFLAGS) -o $@.app
 clean :	
-	-rm *.o *.a *.app hosts_utils
+	-rm *.o *.app 
 
