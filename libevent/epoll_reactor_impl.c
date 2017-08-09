@@ -199,7 +199,7 @@ int main(int argc,char * argv[]){
     
     init_listen_socket(g_efd,port);
     
-    struct epoll_event(events[MAX_EVENTS + 1]);
+    struct epoll_event events[MAX_EVENTS + 1];
     
     printf("server running:port[%d]\n",port);
     int checkpos = 0 , i;
