@@ -1,8 +1,14 @@
 #include <cstdio>
 #include <tclap/CmdLine.h>
+#include "actions.h"
+
+#define ACTION_FORMAT "format"
+#define ACTION_CLEAN "clean"
 
 using namespace std;
 using namespace TCLAP;
+
+
 template<class T> 
 string toString(const T & t){
 	ostringstream oss; 
@@ -20,6 +26,18 @@ T stringToNumber(const std::string & str){
 
 int main(int argc ,char * argv []){
 	CmdLine cmd("hosts file tools",' ',"1.0");
+
+	vector<string> actionAllowed;
+
+	actionAllowed.push_back(ACTION_FORMAT);
+	actionAllowed.push_back(ACTION_CLEAN);
+
+	ValuesConstraint<string> allowedActions(actionAllowed);
+
+	ValueArg<string> actionArg("a","action","excute action",false, ACTION_FORMAT,& allowedActions);
+
+	cmd.add(actionArg);
+
 	ValueArg<string> fileArg(
 		"f", //  参数标志
 		"file",// 参数名
@@ -46,10 +64,15 @@ int main(int argc ,char * argv []){
 		cerr << "errro:" << e.error() << " for argument " << e.argId() << endl;
 	}
 
-	cout << "hosts file :" << fileArg.getValue() << endl;
-	cout << "uniq :" << uniqSw.getValue() << endl;
+	string action = actionArg.getValue();
+	string hostfile = fileArg.getValue();
 
-	getchar();
+	if (action.compare(ACTION_FORMAT) == 0)
+	{
+		hosts_format(hostfile);
+	}
+
+	//getchar();
 	return 0;
 }
 
