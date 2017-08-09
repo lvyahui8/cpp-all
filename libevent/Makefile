@@ -11,7 +11,7 @@ SRCS	= $(wildcard *.c)
 PROGS   = $(SRCS:.c=)
 all:$(PROGS)
 $(PROGS):%:%.c $(LIBAPUE)
-	$(CC) $(CFLAGS) $^ -o exe_$@ $(LDFLAGS) $(LDLIBS) 
+	$(CC) $(CFLAGS) $^ -o $@.app $(LDFLAGS) $(LDLIBS) 
 
 clean:
-	rm -f $(addprefix exe_,$(PROGS)) 
+	rm -f $(addsuffix .app,$(PROGS)) 

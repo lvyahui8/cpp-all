@@ -1,0 +1,16 @@
+下载源文件
+wget http://www.apuebook.com/src.3e.tar.gz
+
+yum install libbsd-devel -y
+
+编译apue.3e
+tar zxvf src.3e.tar.gz && cd apue.3e && make
+
+复制必要文件
+cp include/apue.h /usr/include
+cp lib/error.c /usr/include
+cp ./lib/libapue.a /usr/local/lib/
+
+我的方式是make之后
+cp /root/soft/apue.3e/lib/*.o /root/work/cpp-all/unix/lib
+cp /root/soft/apue.3e/lib/*.a /root/work/cpp-all/unix/lib

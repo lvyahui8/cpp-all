@@ -230,10 +230,11 @@ int main(int argc,char * argv[]){
         
         for(i = 0;i < nfd; i ++){
             struct myevent_s * ev = (struct myevent_s *) events[i].data.ptr;
+	    // 触发的是in事件，并且注册关注的也是in事件
             if((events[i].events & EPOLLIN ) && (ev->events & EPOLLIN)){
                 ev->call_back(ev->fd,events[i].events,ev->arg);
             }
-            
+            // 触发的是out事件，并且注册关注的也是out事件 
             if((events[i].events & EPOLLOUT) && (ev->events & EPOLLOUT)){
                 ev->call_back(ev->fd,events[i].events,ev->arg);
             }
