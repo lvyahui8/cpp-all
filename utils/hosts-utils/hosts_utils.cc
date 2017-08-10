@@ -70,6 +70,8 @@ int main(int argc ,char * argv []){
 	if (action.compare(ACTION_FORMAT) == 0)
 	{
 		hosts_format(hostfile);
+	} else if ( action.compare(ACTION_CLEAN) == 0 ){
+		hosts_clear(hostfile);	
 	}
 
 	//getchar();

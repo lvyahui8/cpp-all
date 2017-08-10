@@ -3,7 +3,7 @@
 
 using namespace std;
 
-string trim(const string & str,const string chs){
+string lstring::trim(const string & str,const string chs){
 	if ( str.empty() ) {
 		return str;
 	}
@@ -27,6 +27,7 @@ string trim(const string & str,const string chs){
 }
 
 
-int split(const string & str,vector<string> ret,string dim  ){
+int lstring::split(const string & str,vector<string> ret,string dim  ){
 	return 0;
 }
+
