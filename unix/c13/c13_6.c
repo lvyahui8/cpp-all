@@ -10,9 +10,19 @@
 #define LOCKFILE "/var/run/daemon.pid"
 #define LOCKMODE (S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)
 
-extern int lockfile(int);
 
-int already_running(){
+int lockfile1(int fd)
+{
+	struct flock fl;
+
+	fl.l_type = F_WRLCK;
+	fl.l_start = 0;
+	fl.l_whence = SEEK_SET;
+	fl.l_len = 0;
+	return(fcntl(fd, F_SETLK, &fl));
+}
+
+int already_running1(){
 	int fd;
 	char buf[16];
 	
@@ -23,8 +33,8 @@ int already_running(){
 		exit(1);
 	}
 		
-	if ( lockfile(fd) < 0) {
-		if (errno = EACCES || errno == EAGAIN ){
+	if ( lockfile1(fd) < 0) {
+		if (errno == EACCES || errno == EAGAIN ){
 			close(fd);
 			return 1;
 		}	
@@ -36,14 +46,14 @@ int already_running(){
 	ftruncate(fd,0);
 
 	// 写入进程pid 锁文件	
-	sprintf(buf,"%ld,",(long) getpid());
+	sprintf(buf,"%ld",(long) getpid());
 	write(fd,buf,strlen(buf) + 1);
 
 	return 0;
 }
 
 int main(int argc, char * argv[]){
-	if (already_running()){
+	if (already_running1()){
 		printf("peoccesss is running");
 		return 1;
 	}

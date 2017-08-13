@@ -5,7 +5,7 @@
 
 // ymm install rsyslog -y
 //
-void daemonize(const char * cmd){
+void daemonize1(const char * cmd){
 	int 		i, fd0,fd1,fd2;
 	pid_t		pid;
 	struct rlimit 	rl;
@@ -89,7 +89,7 @@ void daemonize(const char * cmd){
  *
  */
 int main(int argc, char * argv[]){	
-	daemonize("top");	
+	daemonize1("top");	
 	sleep(1000);
 	return 0;
 }
