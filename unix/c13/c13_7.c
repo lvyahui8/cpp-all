@@ -28,27 +28,27 @@ int lockfile(int fd)
 int already_running(){
 	int fd;
 	char buf[16];
-	
+
 	fd = open(LOCKFILE,O_RDWR | O_CREAT ,LOCKMODE);
-	
+
 	if ( fd < 0) {
 		syslog(LOG_ERR, "can't open %s: %s" , LOCKFILE,strerror(errno));
 		exit(1);
 	}
-		
+
 	if ( lockfile(fd) < 0) {
 		if (errno == EACCES || errno == EAGAIN ){
 			close(fd);
 			return 1;
-		}	
+		}
 		syslog(LOG_ERR,"can't lock %s : %s" , LOCKFILE,strerror(errno));
 		exit(1);
 	}
-	
-	// 文件长度截断为0 ，相当于清空文件	
+
+	// 文件长度截断为0 ，相当于清空文件
 	ftruncate(fd,0);
 
-	// 写入进程pid 锁文件	
+	// 写入进程pid 锁文件
 	sprintf(buf,"%ld",(long) getpid());
 	write(fd,buf,strlen(buf) + 1);
 
@@ -61,13 +61,13 @@ void daemonize(const char * cmd){
 	pid_t		pid;
 	struct rlimit 	rl;
 	struct sigaction sa;
-	
+
 	umask(0); // chmod 000
-	
+
 	if (getrlimit(RLIMIT_NOFILE, &rl) < 0 ){
 		err_quit("%s : can't get file limit ", cmd);
 	}
-	
+
 	if ((pid = fork()) < 0){
 		err_quit("%s : cant't fork ",cmd);
 	} else if ( pid != 0 ){
@@ -76,40 +76,40 @@ void daemonize(const char * cmd){
 		exit(0);
 	}
 
-	// 创建一个新的会话	
+	// 创建一个新的会话
 	// 并使此子进程成为一个新的进程组的组长
 	// 断开所有控制终端
 	// 简而言之：setsid使该进程成为一个没有控制终端的会话首进程
 	setsid();
-	
+
 	// 清空原来的信号集
 	sa.sa_handler = SIG_IGN;
 	sigemptyset(&sa.sa_mask);
-	
+
 	sa.sa_flags = 0;
 
 	if ( sigaction(SIGHUP,&sa,NULL) < 0) {
 		err_quit("%s : cant't ignore SIGHUP",cmd);
 	}
-	
+
 	// 继续fork 是为了兼容System V系统，保证该守护进程不是会话首进程，
 	// 这样在System V系统中，才不会取得任何控制终端，//
-	// 否则在System V系统中，还是会给会话首进程分配控制终端	
+	// 否则在System V系统中，还是会给会话首进程分配控制终端
 	if ( (pid = fork()) < 0 ){
 		err_quit("%s : can't fork ",cmd);
 	} else if( pid != 0) {
 		// 父进程直接结束
-		exit(0);	
+		exit(0);
 	}
-	
+
 	// 切换工作目录到根目录，防止占用挂载的设备导致设备不能卸载
 	if( chdir("/") < 0 ) {
 		err_quit("");
 	}
 
-	//  关闭所有打开的文件句柄，以防止有继承父进程打开的文件句柄	
+	//  关闭所有打开的文件句柄，以防止有继承父进程打开的文件句柄
 	if(rl.rlim_max == RLIM_INFINITY) // 无穷大值
-		rl.rlim_max = 1024;	
+		rl.rlim_max = 1024;
 	for ( i = 0 ; i < rl.rlim_max ; i ++ ){
 		close(i);
 	}
@@ -119,15 +119,16 @@ void daemonize(const char * cmd){
 	// dup 函数创建一个新的文件描述符，值为当前可用文件句柄的最小值，所以这里是1
 	fd1 = dup(0);
 	fd2 = dup(0);
-	
+
 	openlog(cmd, LOG_CONS,LOG_DAEMON);
 
 	if( fd0 != 0 || fd1 != 1 || fd2 != 2 ){
 		syslog(LOG_ERR,"unexpected file descriptors %d %d %d",
 			fd0,fd1,fd2);
 		exit(1);
-	}			
+	}
 }
+
 
 
 sigset_t mask;
@@ -149,7 +150,7 @@ void * thr_fn(void * arg){
 			syslog(LOG_ERR,"sigwait failed");
 			exit(1);
 		}
-		
+
 		switch (signo){
 			default :
 				syslog(LOG_INFO,"unexpected signal %d \n",signo);
@@ -164,7 +165,7 @@ void * thr_fn(void * arg){
 		}
 	}
 	return 0;
-	
+
 }
 
 
@@ -173,34 +174,34 @@ int main(int argc, char * argv[]){
 	pthread_t tid;
 	char * cmd;
 	struct sigaction sa;
-	
+
 	if ( ( cmd = strrchr(argv[0],'/' )) == NULL){
 		cmd = argv[0];
 	}else  cmd ++;
-	
+
 	daemonize(cmd);
-	
+
 	if(already_running()){
 		syslog(LOG_ERR,"daemon already running");
 		exit(1);
-	}	
-	
+	}
+
 	sa.sa_handler = SIG_DFL;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = 0;
-	
+
 	if (sigaction (SIGHUP , &sa,NULL) < 0){
 		err_quit("%s : cant't restore SIGHUP default");
-	}	
+	}
 	sigfillset(&mask);
 	if ((err = pthread_sigmask(SIG_BLOCK,&mask,NULL)) != 0 ){
 		err_exit(err,"SIG_BLOCK error");
 	}
-	
+
 	err = pthread_create(&tid,NULL,thr_fn,0);
 	if ( err != 0 ) {
 		err_exit(err,"can't create thread");
 	}
-	
+
 	exit(0);
 }
