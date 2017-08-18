@@ -61,7 +61,8 @@ void daemonize(const char * cmd){
 	pid_t		pid;
 	struct rlimit 	rl;
 	struct sigaction sa;
-	
+
+	// 取消进程的文件掩码设置，防止子进程创建文件权限不正确	
 	umask(0); // chmod 000
 	
 	if (getrlimit(RLIMIT_NOFILE, &rl) < 0 ){
@@ -202,5 +203,6 @@ int main(int argc, char * argv[]){
 		err_exit(err,"can't create thread");
 	}
 	
-	exit(0);
+	pthread_exit(NULL);
+	return 0;	
 }
