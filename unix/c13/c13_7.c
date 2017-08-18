@@ -62,10 +62,7 @@ void daemonize(const char * cmd){
 	struct rlimit 	rl;
 	struct sigaction sa;
 
-<<<<<<< HEAD
 	// 取消进程的文件掩码设置，防止子进程创建文件权限不正确	
-=======
->>>>>>> 66109c81e363ffe215b4421e2dcdca506daa4044
 	umask(0); // chmod 000
 
 	if (getrlimit(RLIMIT_NOFILE, &rl) < 0 ){
