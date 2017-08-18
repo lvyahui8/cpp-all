@@ -1,6 +1,7 @@
 # Created by .ignore support plugin (hsz.mobi)
 ### Example user template template
 cmake-build-deubg
+cmake-build-debug*
 *.swp
 ### Example user template
 *_svr
