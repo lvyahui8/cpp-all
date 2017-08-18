@@ -203,12 +203,8 @@ int main(int argc, char * argv[]){
 	if ( err != 0 ) {
 		err_exit(err,"can't create thread");
 	}
-<<<<<<< HEAD
 	
 	pthread_exit(NULL);
 	return 0;	
-=======
 
-	exit(0);
->>>>>>> 66109c81e363ffe215b4421e2dcdca506daa4044
 }
