@@ -14,11 +14,11 @@
 
 using namespace std;
 
-static char error_buffer[CURL_ERROR_SIZE];
-static int writer(char*, size_t, size_t, string*);
-static void init(CURL*&, const char*, string*, string headers[]);
+char error_buffer[CURL_ERROR_SIZE]; 
+int writer(char*, size_t, size_t, string*);
+void init(CURL*&, const char*, string*, string headers[]);
 
-static int writer(char* data, size_t size, size_t nmemb, string* writer_data)
+int writer(char* data, size_t size, size_t nmemb, string* writer_data)
 {
     unsigned long sizes = (unsigned long) (size * nmemb);
 
@@ -32,7 +32,7 @@ static int writer(char* data, size_t size, size_t nmemb, string* writer_data)
     return (int) sizes;
 }
 
-static void init(CURL*& conn, const char* url, string * p_buffer, string headers[])
+void init(CURL*& conn, const char* url, string * p_buffer, string headers[])
 {
     curl_easy_setopt(conn, CURLOPT_ERRORBUFFER, error_buffer);
     curl_easy_setopt(conn, CURLOPT_URL, url);

@@ -1,0 +1,20 @@
+
+
+##enable curl static 
+
+wget http://curl.haxx.se/download/curl-7.29.0.tar.gz
+tar zxvf curl-7.29.0.tar.gz
+./configure --prefix=/usr/local/curl \
+--disable-shared --enable-static --without-libidn \
+--without-ssl --without-librtmp --without-gnutls \
+--without-nss --without-libssh2 --without-zlib \
+--without-winidn --disable-rtsp --disable-ldap --disable-ldaps --disable-ipv6
+make && make install
+
+查询flag
+/usr/local/curl/bin/curl-config --static-libs --cflags --libs
+
+/usr/local/curl/lib/libcurl.a
+-I/usr/local/curl/include
+-L/usr/local/curl/lib -lcurl
+
