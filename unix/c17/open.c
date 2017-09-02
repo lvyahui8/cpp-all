@@ -8,7 +8,7 @@ int csopen(char * name,int oflag)
 	int 		len;
 	char 		buf[10];
 	struct iovec	iov[3];
-	static int 	fd[2] = (-1 , -1);
+	static int 	fd[2] = {-1,-1};
 		
 	if ( fd[0] < 0 ) {
 		if (fd_pipe(fd) < 0 ){

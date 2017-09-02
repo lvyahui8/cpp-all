@@ -1,14 +1,11 @@
 include ../Make.defines.linux
 ROOT 	= ..
-SRCS	= $(wildcard *.c)
-# 3 line equals 
-# PROGS   = $(patsubst %.cpp,%,$(SRCS))
-#PROGS   = $(SRCS:%.cpp=%)
-PROGS   = $(SRCS:.c=)
-#PROGS   = $(addprefix exe_,$(SRCS:.cpp=))
-all:$(PROGS)
-$(PROGS):%:%.c $(LIBAPUE)
-	$(CC) $(CFLAGS) $^ -o $@.app $(LDFLAGS) $(LDLIBS) 
+
+all: server client
+
+server:opend.o server_main.o
+
+client:open.o client_main.o
 
 clean:
-	rm -f $(addsuffix .app,$(PROGS)) 
+	-rm -f *.o *.app 

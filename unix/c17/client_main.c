@@ -8,8 +8,8 @@ int main(int argc,char * argv[] ){
 	char 	buf[BUFFSIZE];
 	char 	line[MAXLINE];
 	while( fgets(line,MAXLINE,stdin) != NULL ) {
-		if(line[strlen(len) - 1] == '\n'){
-			line[strlen(len) - 1] = 0;
+		if(line[strlen(line) - 1] == '\n'){
+			line[strlen(line) - 1] = 0;
 		}
 		
 		if ((fd = csopen(line,O_RDONLY)) < 0){
