@@ -1,11 +1,12 @@
 include ../Make.defines.linux
 ROOT 	= ..
 
-all: server client
+all: server.app client.app
 
-server:opend.o server_main.o
-
-client:open.o client_main.o
+server.app:opend.o server_main.o
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS) $(LDLIBS) 
+client.app:open.o client_main.o
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS) $(LDLIBS) 
 
 clean:
 	-rm -f *.o *.app 
