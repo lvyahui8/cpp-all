@@ -26,6 +26,7 @@ echo_read_cb(struct bufferevent *bev, void *ctx)
 	size_t n ;
 	while((command = evbuffer_readln(input,& n,EVBUFFER_EOL_LF))){
 		if ('\r' == command[n-1]) command[n-1]='\0';
+		puts(command);
       		FILE * pp = popen(command,"r");
       		if(pp){
           		char buf[4096];
@@ -122,3 +123,4 @@ main(int argc, char **argv)
         event_base_dispatch(base);
         return 0;
 }
+    
