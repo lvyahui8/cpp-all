@@ -40,7 +40,7 @@ void write2svr(int svrfd){
 		select(maxfdp1,&rset,NULL,NULL,NULL);
 		if(FD_ISSET(svrfd,&rset)){
 			// 服务器socket可读
-			if(read(svrfd,recv,1024) <= 0){
+			if(read(svrfd,recv,1024) < 0){
 				printf("recv failed.");
 				exit(1);
 			}
