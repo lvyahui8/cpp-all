@@ -4,7 +4,6 @@ cmake-build-deubg
 cmake-build-debug*
 *.swp
 ### Example user template
-*_svr
 exe_*
 # IntelliJ project files
 .idea
